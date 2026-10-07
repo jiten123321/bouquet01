@@ -77,6 +77,24 @@
   .card.flash{animation:flash .6s ease;}
   @keyframes flash{from{transform:scale(.97);background:#fde8e6}to{transform:none;background:var(--ivory)}}
 
+
+  /* ---- letter ---- */
+  .letter-btn{justify-self:center;border:0;border-radius:999px;padding:13px 26px;background:linear-gradient(180deg,var(--rose-2),var(--rose));color:var(--ivory);
+    font-family:"Bodoni Moda",Georgia,serif;font-style:italic;font-size:18px;cursor:pointer;box-shadow:0 10px 26px rgba(176,48,106,.3),inset 0 1px 0 rgba(255,255,255,.25);
+    animation:breathe 2.4s ease-in-out infinite;}
+  .letter-btn:focus-visible{outline:2px solid var(--rose);outline-offset:4px;}
+  .letter-btn:active{transform:scale(.97);}
+  .letter-btn[aria-expanded="true"]{animation:none;}
+  .letter{background:var(--ivory);border-radius:6px;padding:28px 24px 26px;box-shadow:0 14px 34px rgba(120,40,50,.16),0 0 0 1px rgba(155,19,40,.08);
+    transform-origin:50% 0;}
+  .letter[hidden]{display:none;}
+  .letter.show{animation:unfold 1s cubic-bezier(.2,.7,.2,1) both;}
+  @keyframes unfold{from{opacity:0;transform:perspective(800px) rotateX(-70deg) translateY(-10px)}to{opacity:1;transform:none}}
+  .letter .to{font-family:"Parisienne",cursive;font-size:34px;color:var(--rose);margin:0 0 8px;line-height:1.1;}
+  .letter p{margin:0 0 14px;font-size:19px;line-height:1.6;}
+  .letter p:last-child{margin-bottom:0;}
+  @media (max-width:520px){.letter{padding:22px 18px 20px;}.letter p{font-size:18px;}}
+
   .final{text-align:center;display:grid;gap:4px;padding-top:6px;}
   .final p{margin:0;font-style:italic;color:var(--ink-soft);text-wrap:balance;}
   .sign{font-family:"Parisienne",cursive;font-size:40px;color:var(--rose);line-height:1.1;}
@@ -124,6 +142,17 @@
   </div>
 
 
+  <button class="letter-btn" id="letterBtn" type="button" aria-expanded="false" aria-controls="letter">A letter for you 💌</button>
+
+  <article class="letter" id="letter" hidden>
+    <p class="to">Dear Ladoo,</p>
+    <p>You don’t have to be extra beautiful, extra happy, or have everything figured out every day.</p>
+    <p>Bas har din apne goals ki taraf ek chhota sa step leti rehna. Even on the days you don’t feel okay. Keep moving, keep learning, keep building yourself.</p>
+    <p>Because I genuinely believe tumhare andar itna potential hai ki ek din tum peeche mudkar kahogi, “Damn, I really did it.” ❤️</p>
+    <p>Aur us din main sabse zyada khush hounga, because you know I’ll be the one who wants to celebrate your journey the most. 🫶🏻🌸</p>
+    <p>Hope you have a beautiful day, ladoo. ❤️</p>
+  </article>
+
   <section class="final">
     <p>You make every ordinary day feel like a bouquet.</p>
     <p>Rest well, cutie. I'm always right here.</p>
@@ -137,6 +166,13 @@
   document.getElementById('openBtn').addEventListener('click',()=>{
     welcome.classList.add('gone');document.body.classList.add('open');window.scrollTo(0,0);
     setTimeout(()=>{welcome.hidden=true;},1100);
+  });
+
+  const lb=document.getElementById('letterBtn'),lt=document.getElementById('letter');
+  lb.addEventListener('click',()=>{
+    const open=lt.hidden;lt.hidden=!open;lb.setAttribute('aria-expanded',open);
+    lb.textContent=open?'Close letter':'A letter for you 💌';
+    if(open){lt.classList.remove('show');void lt.offsetWidth;lt.classList.add('show');lt.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}
   });
 
   /* falling rose petals */
